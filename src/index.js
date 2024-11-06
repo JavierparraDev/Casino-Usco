@@ -10,10 +10,6 @@ connectDB();
 
 
 
-app.get('/', (req, res) => {
-    res.send('¡Bienvenido a tu API con Node.js y MongoDB!');
-  });
-
  
   
   app.listen(PORT, () => {

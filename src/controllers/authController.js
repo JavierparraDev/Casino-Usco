@@ -21,10 +21,22 @@ export const register = async (req, res) => {
     try {
         const { nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, direccion } = req.body;
 
+        // Verifica que no exista otro usuario con el mismo correo electrónico
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
+        }
+
+        // Crear un nuevo usuario con los datos del formulario
         const user = new User({ nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, direccion });
         await user.save();
 
-        res.status(201).json({ message: 'Usuario registrado exitosamente' });
+        // Crear un token JWT para autenticar al usuario
+        const token = generateToken(user._id);
+
+        // Enviar el token como cookie para que pueda ser usado en futuras solicitudes
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 86400000 });
+        res.status(201).json({ message: 'Usuario registrado exitosamente', user });
     } catch (error) {
         res.status(400).json({ error: 'Error al registrar el usuario', details: error.message });
     }
