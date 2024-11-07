@@ -42,25 +42,9 @@ export const validateUser = (req, res, next) => {
         return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
     }
 
-    // Validación de `direccion` (si está presente)
-    if (direccion) {
-        const { calle, ciudad, estado, codigoPostal } = direccion;
-        
-        // Validación de `codigoPostal` (opcional pero debe cumplir si está presente)
-        if (codigoPostal && !/^\d{5}$/.test(codigoPostal)) {
-            return res.status(400).json({ error: 'El código postal debe contener exactamente 5 dígitos.' });
-        }
-        
-        // Validar que `calle`, `ciudad` y `estado` sean strings si están presentes
-        if (calle && typeof calle !== 'string') {
-            return res.status(400).json({ error: 'La calle debe ser un texto válido.' });
-        }
-        if (ciudad && typeof ciudad !== 'string') {
-            return res.status(400).json({ error: 'La ciudad debe ser un texto válido.' });
-        }
-        if (estado && typeof estado !== 'string') {
-            return res.status(400).json({ error: 'El estado debe ser un texto válido.' });
-        }
+    // Validación de `ciudad`
+    if (typeof ciudad !== 'string' || ciudad.trim().length < 2) {
+        return res.status(400).json({ error: 'La ciudad debe ser un texto válido.' });
     }
 
     // Si todo está bien, pasar al siguiente middleware o controlador

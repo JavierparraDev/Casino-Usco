@@ -11,7 +11,7 @@ const Register = () => {
         fechaNacimiento: '',
         email: '',
         password: '',
-        direccion: { calle: '', ciudad: '', estado: '', codigoPostal: '' }
+        ciudad: ''
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -19,15 +19,7 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name.includes('direccion')) {
-            const key = name.split('.')[1];
-            setFormData(prev => ({
-                ...prev,
-                direccion: { ...prev.direccion, [key]: value }
-            }));
-        } else {
-            setFormData(prev => ({ ...prev, [name]: value }));
-        }
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
@@ -62,18 +54,18 @@ const Register = () => {
                 <input name="nombre" placeholder="Nombre" onChange={handleChange} required style={styles.input} />
                 <input name="apellidos" placeholder="Apellidos" onChange={handleChange} required style={styles.input} />
                 <input name="telefono" placeholder="Teléfono" onChange={handleChange} required style={styles.input} />
-                <input name="numeroIdentificacion" placeholder="ID" onChange={handleChange} required style={styles.input} />
+                <input name="numeroIdentificacion" placeholder="CC-NIT-CDN" onChange={handleChange} required style={styles.input} />
                 <input name="fechaNacimiento" type="date" onChange={handleChange} required style={styles.input} />
                 <input name="email" placeholder="Email" onChange={handleChange} required style={styles.input} />
                 <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} required style={styles.input} />
-                <input name="direccion.calle" placeholder="Calle" onChange={handleChange} style={styles.input} />
-                <input name="direccion.ciudad" placeholder="Ciudad" onChange={handleChange} style={styles.input} />
-                <input name="direccion.estado" placeholder="Estado" onChange={handleChange} style={styles.input} />
-                <input name="direccion.codigoPostal" placeholder="Código Postal" onChange={handleChange} style={styles.input} />
+                <input name="ciudad" placeholder="Ciudad" onChange={handleChange} required style={styles.input} />
                 <button type="submit" style={styles.button}>Registrar</button>
+                <button onClick={() => navigate('/login')} style={styles.loginButton}> Iniciar Sesión</button>
+                <button onClick={() => navigate('/')} style={styles.homeButton}>Ir a Home</button>
                 {error && <p style={styles.error}>{error}</p>}
             </form>
-        </div>
+    </div>
+        
     );
 };
 
@@ -82,6 +74,8 @@ const styles = {
     form: { display: 'flex', flexDirection: 'column', gap: '10px' },
     input: { padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '4px' },
     button: { padding: '10px', fontSize: '16px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '4px' },
+    loginButton: { marginTop: '20px' ,padding: '10px', fontSize: '16px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '4px' },
+    homeButton: { marginTop: '20px', padding: '10px', fontSize: '16px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' },
     error: { color: 'red', marginTop: '10px' },
 };
 

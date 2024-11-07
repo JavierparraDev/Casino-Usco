@@ -19,7 +19,7 @@ const generateToken = (userId) => {
 // Controlador de registro
 export const register = async (req, res) => {
     try {
-        const { nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, direccion } = req.body;
+        const { nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, ciudad } = req.body;
 
         // Verifica que no exista otro usuario con el mismo correo electrónico
         const existingUser = await User.findOne({ email });
@@ -28,7 +28,7 @@ export const register = async (req, res) => {
         }
 
         // Crear un nuevo usuario con los datos del formulario
-        const user = new User({ nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, direccion });
+        const user = new User({ nombre, apellidos, telefono, numeroIdentificacion, fechaNacimiento, email, password, ciudad });
         await user.save();
 
         // Crear un token JWT para autenticar al usuario

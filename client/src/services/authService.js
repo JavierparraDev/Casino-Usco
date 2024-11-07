@@ -12,7 +12,7 @@ export const login = async (data) => {
         const response = await axios.post(`${API_URL}/api/users/login`, data, { withCredentials: true });
         return response.data;
     } catch (error) {
-        throw error; // Deja que el error se maneje en el componente Login.jsx
+        throw error; 
     }
 };
 

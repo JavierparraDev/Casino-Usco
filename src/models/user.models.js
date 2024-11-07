@@ -60,21 +60,11 @@ const userSchema = new mongoose.Schema({
         minlength: 8, // Exige al menos 8 caracteres para el password.
         select: false, // Evita que la contraseña se envíe en las consultas por defecto.
     },
-    direccion: {
-        calle: { type: String, trim: true },
-        ciudad: { type: String, trim: true },
-        estado: { type: String, trim: true },
-        codigoPostal: {
-            type: String,
-            trim: true,
-            validate: {
-                validator: function(v) {
-                    return /^\d{5}$/.test(v); // Valida que el código postal tenga 5 dígitos.
-                },
-                message: props => `${props.value} no es un código postal válido.`
-            }
-        }
-    },
+    ciudad: {
+        type: String,
+        trim: true,
+        required: true,
+    }
 }, {
     timestamps: true,
     toJSON: { virtuals: true }, // Permite la generación de propiedades virtuales en el JSON.
